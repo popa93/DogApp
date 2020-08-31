@@ -44,6 +44,7 @@ public class ListViewModel extends AndroidViewModel {
     }
 
     public void refresh() {
+        checkCacheDuration();
         long updateTime=pregHelper.getUpdateTime();
         long currentTime=System.nanoTime();
         if(updateTime!=0&& currentTime-updateTime<refreshTime) {
@@ -57,6 +58,20 @@ public class ListViewModel extends AndroidViewModel {
 
     public void refreshBypassCache(){
         fetchFromRemote();
+
+    }
+
+    private void checkCacheDuration(){
+        String cachePreference=pregHelper.getCacheDuration();
+        if(!cachePreference.equals("")){
+            try{
+                int cachePreferenceInt=Integer.parseInt(cachePreference);
+                refreshTime=cachePreferenceInt*1000*1000*1000L;
+
+            }catch (NumberFormatException e){   //if user inputs some random letters
+                e.printStackTrace();
+            }
+        }
 
     }
 
