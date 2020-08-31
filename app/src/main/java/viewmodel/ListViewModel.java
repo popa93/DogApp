@@ -21,6 +21,7 @@ import model.DogDao;
 import model.DogDatabase;
 import model.DogsApi;
 import model.DogsApiService;
+import util.NotificationsHelper;
 import util.SharedPreferencesHelper;
 
 public class ListViewModel extends AndroidViewModel {
@@ -82,6 +83,7 @@ public class ListViewModel extends AndroidViewModel {
                                 insertTask=new InsertDogsTask();
                                 insertTask.execute(dogBreeds);
                                 Toast.makeText(getApplication(),"Dogs retrieved from endpoint",Toast.LENGTH_SHORT).show();
+                                NotificationsHelper.getInstance(getApplication()).createNotification();
 
                             }
 
